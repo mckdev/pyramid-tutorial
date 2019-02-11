@@ -1,4 +1,4 @@
-#pyramid-tutorial
+# pyramid-tutorial
 
 Code written while following "Quick Tutorial for Pyramid" from official Pyramid docs.
 
