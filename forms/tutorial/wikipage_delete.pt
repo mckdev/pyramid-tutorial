@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WikiPage: Delete</title>
+</head>
+<body>
+    <h1>WikiPage: Delete</h1>
+
+    <p>${message}</p>
+    <p><a href="${request.route_url('wiki_view')}">Go home</a></p>
+</body>
+</html>

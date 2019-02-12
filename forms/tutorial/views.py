@@ -49,8 +49,11 @@ class WikiViews(object):
                 return dict(form=e.render())
 
             # Form is valid. Make a new identifier and add to list.
-            last_uid = int(sorted(pages.keys())[-1])
-            new_uid = str(last_uid + 1)
+            try:
+                last_uid = int(sorted(pages.keys())[-1])
+                new_uid = str(last_uid + 1)
+            except IndexError:
+                new_uid = '100'
             pages[new_uid] = dict(
                 uid=new_uid,
                 title=appstruct['title'],
@@ -81,8 +84,8 @@ class WikiViews(object):
         wiki_form.buttons += (deform.Button(name='delete'),)
 
         if 'delete' in self.request.params:
-            del pages[uid]
-            url = self.request.route_url('wiki_view')
+            url = self.request.route_url('wikipage_delete', uid=page['uid'])
+
             return HTTPFound(url)
 
         if 'submit' in self.request.params:
@@ -100,8 +103,16 @@ class WikiViews(object):
 
             return HTTPFound(url)
 
-
-
         form = wiki_form.render(page)
 
         return dict(page=page, form=form)
+
+    @view_config(route_name='wikipage_delete', renderer='wikipage_delete.pt')
+    def wikipage_delete(self):
+        uid = self.request.matchdict['uid']
+        try:
+            del pages[uid]
+            message = 'Deleted page %s.' % uid
+            return dict(message=message)
+        except KeyError:
+            return HTTPNotFound()

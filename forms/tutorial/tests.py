@@ -66,8 +66,8 @@ class TutorialFunctionalTest(unittest.TestCase):
         self.assertIn(b'<p>Edited Body</p>', res.body)
 
     def test_delete_page(self):
-        self.testapp.post('/100/edit', {
-            'delete': 'delete'
-        }, status=302)
-
+        res = self.testapp.get('/100/delete', status=200)
+        self.assertIn(b'<p>Deleted page 100.</p>', res.body)
         self.testapp.get('/100', status=404)
+
+        self.testapp.get('/303/delete', status=404)

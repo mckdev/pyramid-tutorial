@@ -9,6 +9,9 @@
 </a> |
 <a href="${request.route_url('wikipage_edit', uid=page.uid)}">
     Edit
+</a> |
+<a href="${request.route_url('wikipage_delete', uid=page.uid)}">
+    Delete
 </a>
 
 <h1>${page.title}</h1>
